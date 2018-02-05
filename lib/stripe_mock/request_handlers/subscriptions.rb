@@ -98,7 +98,7 @@ module StripeMock
         customer_id = customer.is_a?(Stripe::Customer) ? customer[:id] : customer.to_s
         customer = assert_existence :customer, customer_id, customers[customer_id]
 
-        if plan && customer
+        if plan && customer && customer[:currency]
           unless customer[:currency] == plan[:currency]
             raise Stripe::InvalidRequestError.new('lol', 'currency', http_status: 400)
           end
